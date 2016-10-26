@@ -54,6 +54,7 @@
     <Content Include="paket.references" />
     <Compile Include="Result.fs" />
     <Compile Include="Utils.fs" />
+    <Compile Include="Downloader.fs" />
     <Compile Include="App.fs" />
   </ItemGroup>
   <ItemGroup>
