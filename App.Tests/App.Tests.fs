@@ -1,8 +1,8 @@
-﻿module App.Tests
+﻿module App.Entry.Tests
 
-open global.Xunit
 open FsUnit.Xunit
+open global.Xunit
 
 [<Fact>]
-let ``Sample Test``() =
-    App.Class1().X |> should equal "F#"
+let ``Sample Test``() = 
+    App.Entry.main |> should not' (equal null)

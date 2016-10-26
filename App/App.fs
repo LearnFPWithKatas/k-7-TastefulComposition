@@ -1,4 +1,4 @@
-﻿namespace App
+﻿module App.Entry
 
-type Class1() = 
-    member __.X = "F#"
+[<EntryPoint>]
+let main _ = 0
