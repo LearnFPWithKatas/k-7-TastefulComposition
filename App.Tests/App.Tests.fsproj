@@ -52,6 +52,7 @@
   <ItemGroup>
     <Content Include="App.config" />
     <Content Include="paket.references" />
+    <Compile Include="Async.Tests.fs" />
     <Compile Include="Result.Tests.fs" />
     <Compile Include="App.Tests.fs" />
   </ItemGroup>
