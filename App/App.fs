@@ -3,18 +3,32 @@
 open System
 open App.Downloader
 
+let goodSites = [
+    "http://google.com"
+    "http://bbc.co.uk"
+    "http://fsharp.org"
+    "http://microsoft.com"
+]
+
+let badSites = [
+    "http://example.com/nopage"
+    "http://bad.example.com"
+    "http://verybad.example.com"
+    "http://veryverybad.example.com"
+]
+
 [<EntryPoint>]
 let main _ = 
-    "http://google.com"
-    |> Uri
-    |> getUriContent 
-    |> Async.RunSynchronously 
-    |> showContentResult 
+    let f() = 
+        largestPageSizeA goodSites
+        |> Async.RunSynchronously 
+        |> showContentSizeResult 
+    Timer.time 2 "largestPageSizeA_Good" f
 
-    "http://example.bad"
-    |> Uri
-    |> getUriContent 
-    |> Async.RunSynchronously 
-    |> showContentResult 
+    let f() = 
+        largestPageSizeA badSites
+        |> Async.RunSynchronously 
+        |> showContentSizeResult 
+    Timer.time 2 "largestPageSizeA_Bad" f
 
     0

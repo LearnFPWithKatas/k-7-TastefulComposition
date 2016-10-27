@@ -23,7 +23,26 @@ let getUriContent (uri : Uri) =
             return Result.Failure [ err ]
     }
 
-let showContentResult result = 
-    match result with
-    | Success(UriContent(uri, html)) -> printfn "SUCCESS: [%s] First 100 chars: %s" uri.Host (html.Substring(0, 100))
+let showContentSizeResult = 
+    function 
+    | Success(UriContentSize(uri, len)) -> printfn "SUCCESS: [%s] Content size is %i" uri.Host len
     | Failure errs -> printfn "FAILURE: %A" errs
+
+let makeContentSize (UriContent(uri, html)) = 
+    if String.IsNullOrEmpty(html) then Result.Failure [ "empty page" ]
+    else 
+        let uriContentSize = UriContentSize(uri, html.Length)
+        Result.Success uriContentSize
+
+let getUriContentSize uri = getUriContent uri |> Async.map (Result.bind makeContentSize)
+
+let maxContentSize list = 
+    let contentSize (UriContentSize(_, len)) = len
+    list |> List.maxBy contentSize
+
+let largestPageSizeA urls = 
+    urls
+    |> List.map (Uri >> getUriContentSize)
+    |> List.sequenceAsyncA
+    |> Async.map List.sequenceResultA
+    |> Async.map (Result.map maxContentSize)
