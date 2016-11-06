@@ -46,3 +46,10 @@ let largestPageSizeA urls =
     |> List.sequenceAsyncA
     |> Async.map List.sequenceResultA
     |> Async.map (Result.map maxContentSize)
+
+let largestPageSizeM urls = 
+    urls
+    |> List.map (Uri >> getUriContentSize)
+    |> List.sequenceAsyncM
+    |> Async.map List.sequenceResultM
+    |> Async.map (Result.map maxContentSize)
