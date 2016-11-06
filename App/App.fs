@@ -20,15 +20,15 @@ let badSites = [
 [<EntryPoint>]
 let main _ = 
     let f() = 
-        largestPageSizeM goodSites
+        largestPageSizeARM goodSites
         |> Async.RunSynchronously 
         |> showContentSizeResult 
-    Timer.time 2 "largestPageSizeM_Good" f
+    Timer.time 2 "largestPageSizeARM_Good" f
 
     let f() = 
-        largestPageSizeM badSites
+        largestPageSizeARM badSites
         |> Async.RunSynchronously 
         |> showContentSizeResult 
-    Timer.time 2 "largestPageSizeM_Bad" f
+    Timer.time 2 "largestPageSizeARM_Bad" f
 
     0

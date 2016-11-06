@@ -59,3 +59,19 @@ let traverseResultM f list =
     List.foldBack folder list initState
 
 let sequenceResultM x = traverseResultM id x
+
+let traverseAsyncResultM f list =
+    let (>>=) x f = AsyncResult.bind f x
+    let retn = AsyncResult.retn
+
+    let cons head tail = head :: tail
+
+    let initState = retn []
+    let folder head tail = 
+        f head >>= (fun h -> 
+        tail >>= (fun t ->
+        retn (cons h t) ))
+
+    List.foldBack folder list initState 
+
+let sequenceAsyncResultM x = traverseAsyncResultM id x
